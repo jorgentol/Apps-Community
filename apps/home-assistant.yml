@@ -57,5 +57,8 @@
           - name: plexguide
             aliases:
               - '{{pgrole}}'
+          - name: host
+            aliases:
+              - '{{pgrole}}'
         state: started
         labels: '{{pg_labels}}'
