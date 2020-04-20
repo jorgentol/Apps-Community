@@ -53,6 +53,11 @@
         volumes: '{{pg_volumes}}'
         env: '{{pg_env}}'
         restart_policy: unless-stopped
-        network_mode: host
+        networks:
+          - name: plexguide
+            aliases:
+              - '{{pgrole}}'
+          - name: macvlan
+            ipv4_address: 192.168.178.181
         state: started
         labels: '{{pg_labels}}'
