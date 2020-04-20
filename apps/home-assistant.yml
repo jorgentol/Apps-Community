@@ -57,6 +57,6 @@
           - name: plexguide
             aliases:
               - '{{pgrole}}'
-          - name: host
+        network_mode: host
         state: started
         labels: '{{pg_labels}}'
