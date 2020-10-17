@@ -18,8 +18,8 @@
         extport: '8766'
         image: 'jammsen/the-forest-dedicated-server'
         
-    - name: CronJob Role
-    include_tasks: "/opt/plexguide/containers/_core.yml"
+    - name: 'Including cron job'
+      include_tasks: '/opt/communityapps/apps/_core.yml'
 
     # EXTRA FUNCTIONS REQUIRED BY THE ROLE #####################################
 
