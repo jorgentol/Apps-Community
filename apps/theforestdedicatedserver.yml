@@ -1,0 +1,73 @@
+#!/bin/bash
+#
+# Title:      McMyadmin (v2)
+# Author(s):  timekills
+# URL:        https://pgblitz.com - http://github.pgblitz.com
+# GNU:        General Public License v3.0
+################################################################################
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    # CORE (MANDATORY) DO NOT CHANGE ###########################################
+
+    - name: 'Set Known Facts'
+      set_fact:
+        pgrole: 'theforest'
+        intport: '8766'
+        extport: '8766'
+        image: 'jammsen/the-forest-dedicated-server'
+        
+    - name: CronJob Role
+    include_tasks: "/opt/plexguide/containers/_core.yml"
+
+    # EXTRA FUNCTIONS REQUIRED BY THE ROLE #####################################
+
+    # LABELS #### KEEPS BOTTOM CLEAN ###########################################
+    - name: 'Adding Traefik'
+      set_fact:
+        pg_labels:
+          traefik.frontend.auth.forward.address: '{{gauth}}'
+          traefik.enable: 'true'
+          traefik.port: '{{intport}}'
+          traefik.frontend.rule: 'Host:{{pgrole}}.{{domain.stdout}}{{tldset}}{{cname}}'
+
+    - name: 'Setting PG Volumes'
+      set_fact:
+        pg_volumes:
+          - '/opt/appdata/{{pgrole}}/steamcmd:/steamcmd'
+          - '/opt/appdata/{{pgrole}}/game:/theforest '
+          - '/etc/localtime:/etc/localtime:ro'
+
+    - name: 'Setting PG ENV'
+      set_fact:
+        pg_env:
+
+    # MAIN SCRIPT ##############################################################
+
+    - name: 'Deploying {{pgrole}}'
+      docker_container:
+        name: '{{pgrole}}'
+        image: '{{image}}'
+        pull: yes
+        published_ports:
+          - '{{ports.stdout}}{{extport}}:{{intport}}'
+          - '8766:8766/tcp'
+          - '8766:8766/udp'
+          - '27015:27015/tcp'
+          - '27015:27015/udp'
+          - '27016:27016/tcp'
+          - '27016:27016/udp'
+        volumes: '{{pg_volumes}}'
+        env: '{{pg_env}}'
+        restart_policy: unless-stopped
+        networks:
+          - name: plexguide
+            aliases:
+              - '{{pgrole}}'
+        state: started
+        labels: '{{pg_labels}}'
+
+##PG-Community
+
+##PG-Community
