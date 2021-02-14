@@ -16,7 +16,7 @@
         pgrole: 'valheim'
         intport: '2456'
         extport: '2456'
-        image: 'mbround18/valheim'
+        image: 'mbround18/valheim:latest'
         
     - name: 'Including cron job'
       include_tasks: '/opt/communityapps/apps/_core.yml'
