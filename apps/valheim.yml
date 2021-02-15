@@ -35,8 +35,8 @@
     - name: 'Setting PG Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/{{pgrole}}/valheim/saves:/valheim/saves'
-          - '/opt/appdata/{{pgrole}}/valheim/server:/valheim/server'
+          - '/opt/appdata/{{pgrole}}saves:/valheim/saves'
+          - '/opt/appdata/{{pgrole}}server:/valheim/server'
           - '/etc/localtime:/etc/localtime:ro'
 
     - name: 'Setting PG ENV'
