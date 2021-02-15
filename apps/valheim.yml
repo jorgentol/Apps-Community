@@ -35,8 +35,8 @@
     - name: 'Setting PG Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/{{pgrole}}saves:/valheim/saves'
-          - '/opt/appdata/{{pgrole}}server:/valheim/server'
+          - '/opt/appdata/{{pgrole}}/saves:/home/steam/.config/unity3d/IronGate/Valheim'
+          - '/opt/appdata/{{pgrole}}/server:/home/steam/valheim'
           - '/etc/localtime:/etc/localtime:ro'
 
     - name: 'Setting PG ENV'
